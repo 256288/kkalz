@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ Kalz UG | Uganda's Finest Urban Beats</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #f9a825;  /* African gold */
+            --secondary-color: #e53935;  /* Vibrant red */
+            --dark-color: #1a1a2e;  /* Deep night blue */
+            --light-color: #f5f5f5;
+            --accent-color: #4a148c;  /* Royal purple */
+            --transition: all 0.3s ease;
+            --african-pattern: url('https://placehold.co/1920x1080?text=African+Pattern&font=montserrat');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            overflow-x: hidden;
+            background-image: var(--african-pattern);
+            background-blend-mode: overlay;
+            background-attachment: fixed;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background-color: rgba(26, 26, 46, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo span {
+            color: var(--light-color);
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem;
+            min-height: calc(100vh - 160px);
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Home Page */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(19, 18, 18, 0.7), rgba(19, 18, 18, 0.7)), url('images/bio.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Mixtape Page */
+        .mixtape-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .mixtape-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .mixtape-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .mixtape-cover {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .mixtape-info {
+            padding: 1.5rem;
+        }
+
+        .mixtape-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(233, 30, 99, 0.8);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .mixtape-card:hover .play-btn {
+            opacity: 1;
+        }
+
+        /* Live Page */
+        .live-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .live-player {
+            width: 100%;
+            max-width: 800px;
+            height: 450px;
+            background-color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .live-player video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .live-chat {
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        /* Tour Dates */
+        .tour-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .tour-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .tour-card:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .tour-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .tour-location {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .tour-date {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Gallery Page */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            aspect-ratio: 1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
+
+        /* Contact Page */
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            color: var(--light-color);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(26, 26, 46, 0.9);
+            padding: 2rem;
+            text-align: center;
+            border-top: 2px solid var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--light-color);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--dark-color);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 2rem;
+                gap: 1.5rem;
+                transition: var(--transition);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .mixtape-grid,
+            .tour-grid,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Audio Player */
+        .audio-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .player-info img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .player-timeline {
+            flex-grow: 1;
+            margin: 0 1rem;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="https://placehold.co/40x40?text=DJK&font=montserrat" alt="DJ Kalz UG logo - stylized turntables with African motif">
+                <span>DJ <span style="color: var(--primary-color)">Kalz</span> UG</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="mixtapes.html" class="nav-link" data-page="mixtapes">Mixtapes</a></li>
+                <li><a href="#live" class="nav-link" data-page="live">Go Live</a></li>
+                <li><a href="#gallery" class="nav-link" data-page="gallery">Gallery</a></li>
+                <li><a href="#tours" class="nav-link" data-page="tours">Tours</a></li>
+                <li><a href="#contact" class="nav-link" data-page="contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <h1>DJ Kalz UG</h1>
+                <p></p>
+                <a href="mixtapes.html" class="btn" id="listen-btn">Listen Now</a>
+            </div>
+
+            <div class="featured-mixtape">
+                <h2 style="margin-bottom: 1rem; color: var(--primary-color);">Latest Release</h2>
+                <div class="mixtape-card" style="max-width: 600px;">
+                    <img src="images/bio.jpg" alt="Latest mixtape cover: DJ Kalz UG Kampala Night Vibes with neon city skyline" class="mixtape-cover">
+                    <div class="mixtape-info">
+                        <h3>Kampala Night Vibes Vol. 3</h3>
+                        <p>Released: June 2025 | 45 tracks | 2hr 15min</p>
+                        <button class="btn" style="margin-top: 1rem;">Play Mixtape</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mixtapes Page -->
+        <section id="mixtapes" class="page">
+            <h2 style="margin-bottom: 1rem; color: var(--primary-color);">Mixtapes</h2>
+            <div class="mixtape-grid">
+                <div class="mixtape-card">
+                  <img src="images/bio.jpg" alt="Latest mixtape cover: DJ Kalz UG Kampala Night Vibes with neon city skyline" class="mixtape-cover">
+                    <div class="play-btn">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="mixtape-info">
+                        <h3>Jinja Jam Session</h3>
+                        <p>2023 | 38 tracks</p>
+                    </div>
+                </div>
+                <div class="mixtape-card">
+                    <img src= "images/bio.jpg" alt="Latest mixtape cover: DJ Kalz UG Kampala Night Vibes with neon city skyline" class="mixtape-cover">
+                    <div class="play-btn">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="mixtape-info">
+                        <h3>Afro Tropical Vibes</h3>
+                        <p>2025 | 42 tracks</p>
+                    </div>
+                </div>
+                <div class="mixtape-card">
+ <img src= "images/bio.jpg" alt="Latest mixtape cover: DJ Kalz UG Kampala Night Vibes with neon city skyline" class="mixtape-cover">
+                    <div class="play-btn">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="mixtape-info">
+                        <h3>Happy Boyz Nkulabye</h3>
+                        <p>2023 | 35 tracks</p>
+                    </div>
+                </div>
+                <div class="mixtape-card">
+ <img src= "images/bio.jpg" alt="Latest mixtape cover: DJ Kalz UG Kampala Night Vibes with neon city skyline" class="mixtape-cover">
+                    <div class="play-btn">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="mixtape-info">
+                        <h3>Ghetto Youth Anthems</h3>
+                        <p>2025 | 40 tracks</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Page -->
+        <section id="live" class="page">
+            <h2 style="margin-bottom: 1rem; color: var(--primary-color);">Go Live</h2>
+            <div class="live-container">
+                <div class="live-player">
+                    <video poster="https://placehold.co/800x450?text=Live+Stream+Coming+Soon&font=montserrat" controls>
+                        <source src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="live-status">
+                    <p>Next Live Show: Every Day Every Week</p>
+                </div>
+                <div class="live-chat">
+                    <h3 style="margin-bottom: 1rem;">Live Chat</h3>
+                    <div id="chat-messages" style="height: 200px; overflow-y: scroll; margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 1rem;">
+                        <p>DJ Kalz UG: Welcome to the live chat! The show starts soon...</p>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Type your message..." style="width: 100%; padding: 0.8rem;">
+                    </div>
+                    <button class="btn">Send</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Page -->
+        <section id="gallery" class="page">
+            <h2 style="margin-bottom: 1rem; color: var(--primary-color);">Photo Gallery</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://placehold.co/500x500?text=Festival+Performance&font=montserrat" alt="DJ Kalz UG performing at Nyege Nyege Festival with large crowd">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://placehold.co/500x500?text=Studio+Session&font=montserrat" alt="DJ Kalz UG in the studio mixing tracks with professional equipment">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://placehold.co/500x500?text=Club+Performance&font=montserrat" alt="Nightclub performance with laser lights and excited crowd">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://placehold.co/500x500?text=Backstage&font=montserrat" alt="DJ Kalz UG backstage preparing for show with team">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://placehold.co/500x500?text=Meet+and+Greet&font=montserrat" alt="Fans meeting DJ Kalz UG after performance">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://placehold.co/500x500?text=Travel+Moments&font=montserrat" alt="DJ Kalz UG traveling to different venues across Africa">
+                </div>
+            </div>
+        </section>
+
+        <!-- Tours Page -->
+        <section id="tours" class="page">
+            <h2 style="margin-bottom: 1rem; color: var(--primary-color);">Tour Dates</h2>
+            <div class="tour-grid">
+                <div class="tour-card">
+                    <h3>Kampala Nights</h3>
+                    <div class="tour-location">
+                        <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i>
+                        <span>Guaba Lounge, Kampala</span>
+                    </div>
+                    <div class="tour-date">
+                        <i class="far fa-calendar-alt" style="margin-right: 0.5rem;"></i>
+                        <span>July 15, 2025 | 10PM</span>
+                    </div>
+                    <p>Special Afro-night featuring DJ Kalz UG alongside special guests from around East Africa.</p>
+                    <button class="btn" style="margin-top: 1rem;">Get Tickets</button>
+                </div>
+                <div class="tour-card">
+                    <h3>Beach Party</h3>
+                    <div class="tour-location">
+                        <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i>
+                        <span>Africana Beach, Entebbe</span>
+                    </div>
+                    <div class="tour-date">
+                        <i class="far fa-calendar-alt" style="margin-right: 0.5rem;"></i>
+                        <span>July 22, 2023 | 2PM</span>
+                    </div>
+                    <p>Day-to-night beach party with tropical vibes and sunset mixes.</p>
+                    <button class="btn" style="margin-top: 1rem;">Get Tickets</button>
+                </div>
+                <div class="tour-card">
+                    <h3>Kampala Connection</h3>
+                    <div class="tour-location">
+                        <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i>
+                        <span>Happy Boyz Nakulabye</span>
+                    </div>
+                    <div class="tour-date">
+                        <i class="far fa-calendar-alt" style="margin-right: 0.5rem;"></i>
+                        <span>August 5, 2025 | 9PM</span>
+                    </div>
+                    <p>Uganda debut featuring Kalz Exclusive New Mixes & Collaborations.</p>
+                    <button class="btn" style="margin-top: 1rem;">Get Tickets</button>
+                </div>
+            </div>
+        </section>
+
+<!-- Contact Page -->
+<section id="contact" class="page">
+    <h2 style="margin-bottom: 1rem; color: var(--primary-color);">Contact DJ Kalz UG For Bookings And Many More.</h2>
+    <div class="contact-form">
+  
+        <form id="contactForm" method="POST" action="">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="btn">Send Message</button>
+        </form>
+    </div>
+</section>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="facebook.com/djkalz" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="tweeter.com/djkalz" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="instagram.com/djkalz" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="youtube.com/djkalz" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" aria-label="SoundCloud"><i class="fab fa-soundcloud"></i></a>
+            <a href="#" aria-label="Mixcloud"><i class="fab fa-mixcloud"></i></a>
+        </div>
+        <div class="copyright">
+            &copy; 2025 Chax Coders Africa. All Rights Reserved. | Management: Kalz Entertainment Uganda
+        </div>
+    </footer>
+
+    <!-- Audio Player -->
+    <div class="audio-player">
+        <div class="player-info">
+            <img src="https://placehold.co/50x50?text=Now+Playing&font=montserrat" alt="Currently playing track cover">
+            <div>
+                <div class="track-title">Afro Tropical Mix</div>
+                <div class="artist-name">DJ Kalz UG</div>
+            </div>
+        </div>
+        <div class="player-controls">
+            <button><i class="fas fa-step-backward"></i></button>
+            <button><i class="fas fa-play"></i></button>
+            <button><i class="fas fa-step-forward"></i></button>
+        </div>
+        <div class="player-timeline">
+            <div class="progress-bar">
+                <div class="progress" style="width: 30%;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.8rem;">
+                <span>1:30</span>
+                <span>4:45</span>
+            </div>
+        </div>
+        <div class="volume-control">
+            <i class="fas fa-volume-down"></i>
+            <input type="range" min="0" max="100" value="80" style="width: 100px;">
+        </div>
+    </div>
+
+    <script>
+        // Mobile Navigation
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.innerHTML = navLinks.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Page Navigation
+        const navItems = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all nav items and pages
+                navItems.forEach(navItem => navItem.classList.remove('active'));
+                pages.forEach(page => page.classList.remove('active'));
+                
+                // Add active class to clicked nav item and corresponding page
+                this.classList.add('active');
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+                
+                // Close mobile menu
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // Audio Player Functionality
+        const playBtn = document.querySelector('.audio-player .fa-play');
+        let isPlaying = false;
+
+        playBtn.parentElement.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            playBtn.classList = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+            // In a real implementation, you would control an Audio object here
+        });
+
+        // Contact Form Submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! DJ Kalz UG will get back to you soon.');
+            this.reset();
+        });
+
+        // Mixtape Play Button
+        document.querySelectorAll('.mixtape-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // In a real implementation, this would play the selected mixtape
+                const title = this.querySelector('h3').textContent;
+                document.querySelector('.track-title').textContent = title;
+                document.querySelector('.artist-name').textContent = 'DJ Kalz UG';
+                document.querySelector('.audio-player img').src = this.querySelector('img').src;
+                
+                // Show player if hidden (mobile)
+                document.querySelector('.audio-player').style.display = 'flex';
+            });
+        });
+
+        // Listen Now button scroll to mixtapes
+        document.getElementById('listen-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('[data-page="mixtapes"]').click();
+        });
+    </script>
+</body>
+</html>
